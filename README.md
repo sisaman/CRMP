@@ -5,7 +5,7 @@ Code to accompany the paper "Predicting Anchor Links between Heterogeneous Socia
 #### Dataset:
 
 You can download the dataset from the following url: 
-https://www.dropbox.com/s/u8zg4vm1epwvc34/twitter-foursquare.gz?dl=0
+https://www.dropbox.com/s/u8zg4vm1epwvc34/twitter-foursquare.gz
 
 #### Paper:
 
