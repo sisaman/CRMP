@@ -22,4 +22,4 @@ https://arxiv.org/pdf/1607.08821v2.pdf
 
 #### Citing:
 
-> Sina Sajadmanesh, Hamid R. Rabiee and Ali Khodadadi, **Predicting Anchor Links between Heterogeneous Social Networks**, In *Proceedings of the 2016 IEEE/ACM International Conference on Advances in Social Networks Analysis and Mining (ASONAM)*, August, 2016, San Francisco, CA, USA.
+> Sina Sajadmanesh, Hamid R. Rabiee and Ali Khodadadi, **"Predicting Anchor Links between Heterogeneous Social Networks,"** In *Proceedings of the 2016 IEEE/ACM International Conference on Advances in Social Networks Analysis and Mining (ASONAM)*, San Francisco, CA, USA, August 2016, pp. 158-163.
