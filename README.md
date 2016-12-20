@@ -4,7 +4,7 @@ Code to accompany the paper "Predicting Anchor Links between Heterogeneous Socia
 
 #### Dataset:
 
-Please drop me and email to send you the download link. 
+Please drop me an email to send you the download link.  
 <sajadmanesh@ce.sharif.edu>
 
 #### Usage:
