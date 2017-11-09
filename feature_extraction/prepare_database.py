@@ -345,16 +345,16 @@ def create_similarity():
         p.map(execute_sim, table_queries)
         p.map(execute_sim, index_queries)
 
-    time_similarity(twitter, 'time_tweets', 'username')
+    time_similarity(twitter, 'time_tweets', 'username', 'source7')
 
     for gamma in gamma_t_set:
-        time_similarity(fsquare, 'tips_%s' % gamma, 'user_id')
+        time_similarity(fsquare, 'tips_%s' % gamma, 'user_id', 'target7_%s' % gamma)
 
     for gamma in gamma_t_set:
-        post_similarity(fsquare, 'tips_%s' % gamma, 'user_id')
+        post_similarity(fsquare, 'tips_%s' % gamma, 'user_id', 'target8_%s' % gamma)
 
 
-def time_similarity(database, table, field='username'):
+def time_similarity(database, table, field, target_table):
     db2 = MySQLConnection(**get_db_config(database=database))
     cursor2 = db2.cursor()
 
@@ -374,14 +374,19 @@ def time_similarity(database, table, field='username'):
                     else:
                         time_sim[user1, user2] = 1
 
-    with open('timesim_%s_%s' % (database, table), mode='w') as f:
-        for user, count in time_sim.items():
-            f.write('%s,%s,%d\n' % (user[0], user[1], count))
-
+	query = 'INSERT INTO ' + target_table + '(user1, user2, count) VALUES '
+	for user, count in time_sim.items():
+		query += ','.join(['(%s,%s,%d)' % (user[0], user[1], count) for user, count in time_sim.items()])
+	
+	query += ';'
+    # with open('timesim_%s_%s' % (database, table), mode='w') as f:
+        # for user, count in time_sim.items():
+            # f.write('%s,%s,%d\n' % (user[0], user[1], count))
+	execute_sim(query)
     logging.info('Time similarity done. Database: %s, Table: %s' % (database, table))
 
 
-def post_similarity(database, table, field='username'):
+def post_similarity(database, table, field, target_table):
     logging.info('Post similarity for database: %s, table: %s' % (database, table))
     db2 = MySQLConnection(**get_db_config(database=database))
     cursor2 = db2.cursor()
@@ -455,22 +460,25 @@ def post_similarity(database, table, field='username'):
 
     logging.info('Calculating similarities...')
 
+	query = 'INSERT INTO ' + target_table + '(user1, user2, count) VALUES '
     bar = ProgressBar(maxval=len(simdic) ** 2, widgets=widget)
     bar.start()
     index = 1
-    with open('postsim_%s_%s' % (database, table), mode='w') as f:
-        items = simdic.items()
-        for u, x in items:
-            for v, y in items:
-                if u != v:
-                    sim = x * y.T
-                    if sim > 0:
-                        f.write('%s,%s,%f\n' % (u, v, sim[0, 0]))
-                bar.update(index)
-                index += 1
+    # with open('postsim_%s_%s' % (database, table), mode='w') as f:
+	items = simdic.items()
+	for u, x in items:
+		for v, y in items:
+			if u != v:
+				sim = x * y.T
+				if sim > 0:
+					query += '(%s,%s,%f),' % (u, v, sim[0, 0])
+			bar.update(index)
+			index += 1
 
     bar.finish()
-
+	if query[-1] == ',':
+		query = query[:-1]+';'
+	execute_sim(query)
     logging.info('Post similarity done. Database: %s, Table: %s' % (database, table))
 
 
