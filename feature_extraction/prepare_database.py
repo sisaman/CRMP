@@ -597,7 +597,6 @@ def main():
     create_twitter()
     create_fsquare()
     create_similarity()
-	# at this point, manually insert data obtained from last step into database
     fix_similarity()
     create_metapaths()
     pass
