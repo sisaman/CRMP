@@ -23,7 +23,7 @@ result = zeros(2,3,10,10,5,2);
 % 5D: Measure           Acc=1, Pre=2, Rec=3, F1=4, Auc=5
 % 6D: Mean/Std          Mean=1, Std=2
 for gamma_a = 80
-    for gamma_t = 10:10:90
+    for gamma_t = 10:10:80
         dataset = sprintf('dataset_%s_%d_%d', tsplit, gamma_a, gamma_t);    
         load(dataset);
         fprintf('------------load %s-----------\n', dataset);
